@@ -77,16 +77,6 @@
 			enable-active-high;
 		};
 
-		reg_usb_h1_vbus: regulator@1 {
-			compatible = "regulator-fixed";
-			reg = <1>;
-			regulator-name = "usb_h1_vbus";
-			regulator-min-microvolt = <5000000>;
-			regulator-max-microvolt = <5000000>;
-			gpio = <&gpio1 29 0>;
-			enable-active-high;
-		};
-
 		reg_audio: regulator@2 {
 			compatible = "regulator-fixed";
 			reg = <2>;
@@ -925,7 +915,6 @@
 };
 
 &usbh1 {
-	vbus-supply = <&reg_usb_h1_vbus>;
 	status = "okay";
 };
 
