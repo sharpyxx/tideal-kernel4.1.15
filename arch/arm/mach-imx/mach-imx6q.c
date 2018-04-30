@@ -336,7 +336,25 @@ static inline void imx6q_enet_init(void)
 	if (cpu_is_imx6q() && imx_get_soc_revision() == IMX_CHIP_REVISION_2_0)
 		imx6q_enet_clk_sel();
 }
+static void imx6q_display_power_ctrl_init(void)
+{
+	struct device_node *lcd = NULL;
+	int ret = 0,power_ctrl_gpio = 0;
 
+	ret = of_find_node_by_name(NULL,"display_power_ctrl");
+	if(!ret){
+		printk(KERN_ERR "%s:Can find node display_power_ctrl\n",__func__);
+		return;
+	}
+	power_ctrl_gpio = of_get_named_gpio(lcd,"display_power_gpio",0);
+	if(gpio_is_valid(power_ctrl_gpio)){
+		ret = gpio_request_one(power_ctrl_gpio,GPIOF_OUT_INIT_HIGH,"display_power_gpio");
+		if(!ret)
+			printk(KERN_ERR "%s:display_power_gpio request failed\n",__func__);
+
+	}
+	printk(KERN_ERR "%s:power_ctrl_init is ok\n",__func__);
+}
 static void __init imx6q_init_machine(void)
 {
 	struct device *parent;
@@ -359,6 +377,7 @@ static void __init imx6q_init_machine(void)
 	cpu_is_imx6q() ?  imx6q_pm_init() : imx6dl_pm_init();
 	imx6q_axi_init();
 	imx6q_mini_pcie_init();
+	imx6q_display_power_ctrl_init();
 }
 
 #define OCOTP_CFG3			0x440

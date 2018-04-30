@@ -91,3 +91,11 @@ config FB_MXC_EINK_V2_PANEL
 config FB_MXC_EINK_AUTO_UPDATE_MODE
 	bool "E-Ink Auto-update Mode Support"
 	depends on FB_MXC_EINK_PANEL
+
+config CHUNGHWA_CABC
+        tristate "Chunghwa CABC function"
+        help
+          Say yes here to support switching on/off Chunghua CABC
+          function.  This function turns backlight density of a
+          display panel automatically according to the content
+          shown on the panel.
