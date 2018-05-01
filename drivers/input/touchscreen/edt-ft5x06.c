@@ -71,6 +71,9 @@
 #define EDT_RAW_DATA_RETRIES		100
 #define EDT_RAW_DATA_DELAY		1 /* msec */
 
+#define MAX_SCREEN_X 800
+#define MAX_SCREEN_Y 1280
+
 enum edt_ver {
 	M06,
 	M09,
@@ -1038,12 +1041,13 @@ static int edt_ft5x06_ts_probe(struct i2c_client *client,
 	__set_bit(EV_KEY, input->evbit);
 	__set_bit(EV_ABS, input->evbit);
 	__set_bit(BTN_TOUCH, input->keybit);
-	input_set_abs_params(input, ABS_X, 0, tsdata->num_x * 64 - 1, 0, 0);
-	input_set_abs_params(input, ABS_Y, 0, tsdata->num_y * 64 - 1, 0, 0);
+	input_set_abs_params(input, ABS_X, 0, MAX_SCREEN_X, 0, 0);
+	input_set_abs_params(input, ABS_Y, 0, MAX_SCREEN_Y, 0, 0);
 	input_set_abs_params(input, ABS_MT_POSITION_X,
-			     0, tsdata->num_x * 64 - 1, 0, 0);
+			     0, MAX_SCREEN_X, 0, 0);
 	input_set_abs_params(input, ABS_MT_POSITION_Y,
-			     0, tsdata->num_y * 64 - 1, 0, 0);
+			     0, MAX_SCREEN_Y, 0, 0);
+
 
 	if (!pdata)
 		touchscreen_parse_of_params(input);
@@ -1080,6 +1084,8 @@ static int edt_ft5x06_ts_probe(struct i2c_client *client,
 	dev_dbg(&client->dev,
 		"EDT FT5x06 initialized: IRQ %d, WAKE pin %d, Reset pin %d.\n",
 		client->irq, tsdata->wake_pin, tsdata->reset_pin);
+
+	printk(KERN_INFO "%s::FT52x6 driver probe successfully!!!\n",__func__);
 
 	return 0;
 

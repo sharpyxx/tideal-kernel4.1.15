@@ -494,11 +494,11 @@
 	pinctrl-0 = <&pinctrl_i2c3>;
 	status = "okay";
 
-	egalax_ts@04 {
-		compatible = "eeti,egalax_ts";
-		reg = <0x04>;
+	edt_ft5206_ts@38 {
+		compatible = "edt,edt-ft5206";
+		reg = <0x38>;
 		pinctrl-names = "default";
-		pinctrl-0 = <&pinctrl_i2c3_egalax_int>;
+		pinctrl-0 = <&pinctrl_i2c3_edt_int>;
 		interrupt-parent = <&gpio6>;
 		interrupts = <7 2>;
 		wakeup-gpios = <&gpio6 7 GPIO_ACTIVE_HIGH>;
@@ -590,8 +590,9 @@
 			>;
 		};
 
-		pinctrl_i2c3_egalax_int: egalax_i2c3_intgrp {
+		pinctrl_i2c3_edt_int: edt_i2c3_intgrp {
 			fsl,pins = <
+				/*CAP_TCH_INT1 --> NANDF_CLE*/
 				MX6QDL_PAD_NANDF_CLE__GPIO6_IO07 0x80000000
 			>;
 		};
